@@ -3,9 +3,9 @@
 const jsonParser = require('../lib/json_parser');
 const Project = require('../model/project');
 
-let app = {};
+let api = {};
 
-app.projectsDatabase = {
+api.projectsDatabase = {
   '2c45ede0-523a-11e6-b124-27e69760e669': {
     id: '2c45ede0-523a-11e6-b124-27e69760e669',
     projectName: 'My HNG',
@@ -14,26 +14,26 @@ app.projectsDatabase = {
   }
 };
 
-app.homepageGet = (req, res) => {
+api.homepageGet = (req, res) => {
   res.status(200).send('For project API, please go to /api/projects');
 };
 
-app.projectsGetAll = (req, res) => {
+api.projectsGetAll = (req, res) => {
   let projectsArray = [];
-  for (let key in app.projectsDatabase) {
-    projectsArray.push(app.projectsDatabase[key]);
+  for (let key in api.projectsDatabase) {
+    projectsArray.push(api.projectsDatabase[key]);
   }
   res.status(200).json(projectsArray);
 };
 
-app.projectsGetById = (req, res) => {
+api.projectsGetById = (req, res) => {
   let projectId = req.params.id;
   let responseJson = {};
   if (projectId !== undefined) {
-    if(app.projectsDatabase[projectId] !== undefined) {
+    if(api.projectsDatabase[projectId] !== undefined) {
       responseJson.status = 200;
       responseJson.msg = 'Success';
-      res.status(responseJson.status).json(app.projectsDatabase[projectId]);
+      res.status(responseJson.status).json(api.projectsDatabase[projectId]);
     } else {
       responseJson.status = 404;
       responseJson.msg = 'Project id not found';
@@ -46,7 +46,7 @@ app.projectsGetById = (req, res) => {
   }
 };
 
-app.projectsPost = (req, res) => {
+api.projectsPost = (req, res) => {
   let responseJson = {};
   if (!req.body) {
     responseJson.status = 400;
@@ -58,10 +58,10 @@ app.projectsPost = (req, res) => {
       parsedJson.technology !== undefined &&
       parsedJson.github !== undefined) {
     let project = new Project(parsedJson.projectName, parsedJson.technology, parsedJson.github);
-    while(app.projectsDatabase[project.id] !== undefined) {
+    while(api.projectsDatabase[project.id] !== undefined) {
       project.getNewId();
     }
-    app.projectsDatabase[project.id] = project;
+    api.projectsDatabase[project.id] = project;
     responseJson.status = 200;
     responseJson.msg = 'Success';
     return res.status(responseJson.status).json(project);
@@ -72,11 +72,11 @@ app.projectsPost = (req, res) => {
   return res.status(responseJson.status).json(responseJson);
 };
 
-app.projectsDelete = (req, res) => {
+api.projectsDelete = (req, res) => {
   let projectId = req.params.id;
   let responseJson = {};
-  if(app.projectsDatabase[projectId] !== undefined) {
-    delete app.projectsDatabase[projectId];
+  if(api.projectsDatabase[projectId] !== undefined) {
+    delete api.projectsDatabase[projectId];
     responseJson.status = 204;
     responseJson.msg = 'Success';
   } else {
@@ -86,18 +86,18 @@ app.projectsDelete = (req, res) => {
   res.status(responseJson.status).json(responseJson);
 };
 
-app.projectsPut = (req, res) => {
+api.projectsPut = (req, res) => {
   let projectId = req.params.id;
   let responseJson = {};
   jsonParser(req)
     .then((parsedJson) => {
-      if  (app.projectsDatabase[projectId] !== undefined &&
+      if  (api.projectsDatabase[projectId] !== undefined &&
           parsedJson.projectName !== undefined &&
           parsedJson.technology !== undefined &&
           parsedJson.github !== undefined) {
-        app.projectsDatabase[projectId].projectName = parsedJson.projectName;
-        app.projectsDatabase[projectId].technology = parsedJson.technology;
-        app.projectsDatabase[projectId].github = parsedJson.github;
+        api.projectsDatabase[projectId].projectName = parsedJson.projectName;
+        api.projectsDatabase[projectId].technology = parsedJson.technology;
+        api.projectsDatabase[projectId].github = parsedJson.github;
         responseJson.status = 200;
         responseJson.msg = 'Success';
         res.status(responseJson.status).json(parsedJson);
@@ -114,4 +114,4 @@ app.projectsPut = (req, res) => {
 
 };
 
-module.exports = app;
+module.exports = api;

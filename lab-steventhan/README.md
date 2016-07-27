@@ -1,7 +1,7 @@
 ## CRUD api for personal portfolio projects
 ## Changes
 `morgan` middleware has been added, and is used in `dev` mode.
-`errorResponse` custom middleware also added in the lib folder, used for logging detailed message on server side and generic message on client side. Ideally the AppError constructor should be used wherever there's error occur, but it's only implemented at `localhost:3000/api/projects`
+`errorResponse` custom middleware also added in the lib folder, used for logging detailed message on server side and generic message on client side. Ideally, the AppError constructor should be used wherever there's error, but it's only implemented at `localhost:3000/api/projects` at the moment.
 
 ## Usage:
   * Navigate to folder `lab-steventhan`
