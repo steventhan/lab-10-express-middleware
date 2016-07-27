@@ -1,11 +1,12 @@
 'use strict';
 
-const express = require('express');
-const server = express();
-const router = require('./route/project_routes');
+const server = require('express')();
+const router = require('./route/router');
 const morgan = require('morgan');
+const errorResponse = require('./lib/error_response');
 
 server.use(morgan('dev'));
+server.use(errorResponse);
 server.use('/', router);
 
 

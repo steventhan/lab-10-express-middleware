@@ -6,20 +6,20 @@ let AppError = function (message, statusCode, responseMessage) {
   this.responseMessage = responseMessage;
 };
 
-AppError.isAnInstanceOfAppError = function (error) {
+AppError.isAnInstance = function (error) {
   return error instanceof AppError;
 };
 
-AppError.new400 = function () {
-
+AppError.new400 = function (message) {
+  return new AppError(message, 400, '400 Bad Request');
 };
 
-AppError.new404 = function () {
-  
+AppError.new404 = function (message) {
+  return new AppError(message, 404, '404 Not Found');
 };
 
-AppError.new500 = function () {
-
+AppError.new500 = function (message) {
+  return new AppError(message, 500, '500 Internal Server Error');
 };
 
 module.exports = AppError;

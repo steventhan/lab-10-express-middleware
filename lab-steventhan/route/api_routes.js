@@ -1,7 +1,7 @@
 'use strict';
 
-const jsonParser = require('./lib/json_parser');
-const Project = require('./model/project');
+const jsonParser = require('../lib/json_parser');
+const Project = require('../model/project');
 
 let app = {};
 

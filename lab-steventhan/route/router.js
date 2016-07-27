@@ -1,40 +1,39 @@
 'use strict';
 
 const Router = require('express').Router;
-const app = require('../app');
+const api = require('./api_routes');
 const bodyParser = require('body-parser').json();
+const AppError = require('../lib/app_error');
 
 let router = new Router();
 
 router.get('/', (req, res) => {
-  app.homepageGet(req, res);
+  api.homepageGet(req, res);
 });
 
 router.get('/api/projects/all', (req, res) => {
-  app.projectsGetAll(req, res);
+  api.projectsGetAll(req, res);
 });
 
 router.get('/api/projects', (req, res) => {
-  let responseJson = {};
-  responseJson.status = 400;
-  responseJson.msg = 'Bad request, please specify project id. For e.g \'/api/projects/11111\'';
-  res.status(responseJson.status).json(responseJson);
+  let error = AppError.new400('Connection at /api/projects without any id');
+  res.sendError(error);
 });
 
 router.get('/api/projects/:id', (req, res) => {
-  app.projectsGetById(req, res);
+  api.projectsGetById(req, res);
 });
 
 router.post('/api/projects', bodyParser, (req, res) => {
-  app.projectsPost(req, res);
+  api.projectsPost(req, res);
 });
 
 router.delete('/api/projects/:id', (req, res) => {
-  app.projectsDelete(req, res);
+  api.projectsDelete(req, res);
 });
 
 router.put('/api/projects/:id', (req, res) => {
-  app.projectsPut(req, res);
+  api.projectsPut(req, res);
 });
 
 router.get('*', (req, res) => {
