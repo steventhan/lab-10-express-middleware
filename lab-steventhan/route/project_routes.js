@@ -4,7 +4,6 @@ const Router = require('express').Router;
 const app = require('../app');
 const bodyParser = require('body-parser').json();
 
-
 let router = new Router();
 
 router.get('/', (req, res) => {
