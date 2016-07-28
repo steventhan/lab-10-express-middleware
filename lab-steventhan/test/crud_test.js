@@ -43,7 +43,7 @@ describe('the GET method', () => {
       .get('/api/projects')
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(JSON.parse(res.text).msg).to.eql('Bad request, please specify project id. For e.g \'/api/projects/11111\'');
+        expect(JSON.parse(res.text).msg).to.eql('400 Bad Request');
         done();
       });
   });
